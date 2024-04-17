@@ -24,7 +24,7 @@ function Header(props) {
     <div>
       <Navbar {...props}>
         <NavbarBrand href="/" id="title">
-          My Cart
+          Bharat Cart
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

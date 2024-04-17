@@ -1,13 +1,14 @@
 import "./App.css";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
-import Slider from "./components/Slider/Slider";
+import Home from "./pages/Home/Home";
+import MainRoutes from "./routes/MainRoutes";
 
 function App() {
   return (
     <>
       <Header color="light" light={true} container="fluid" expand="md" />
-      <Slider slide={true} />
+      <Home />
       <Footer />
     </>
   );

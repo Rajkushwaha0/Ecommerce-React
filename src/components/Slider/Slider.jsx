@@ -72,7 +72,7 @@ function Slider(args) {
       <style>
         {`.custom-carousel-tag img {
               width: 100%;
-              height: 550px;  
+              height: 650px;  
             }`}
       </style>
       <Carousel
