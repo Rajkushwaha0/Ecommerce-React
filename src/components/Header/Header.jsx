@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   Collapse,
   Navbar,
@@ -17,13 +19,17 @@ import "./Header.css";
 
 function Header(props) {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
+
+  const navigator = useNavigate();
+  function handleTitleClick() {
+    navigator("/");
+  }
 
   return (
     <div>
       <Navbar {...props}>
-        <NavbarBrand href="/" id="title">
+        <NavbarBrand onClick={handleTitleClick} href="/" id="title">
           Bharat Cart
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
