@@ -29,7 +29,7 @@ function Header(props) {
   return (
     <div>
       <Navbar {...props}>
-        <NavbarBrand onClick={handleTitleClick} href="/" id="title">
+        <NavbarBrand onClick={handleTitleClick} id="title">
           Bharat Cart
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
