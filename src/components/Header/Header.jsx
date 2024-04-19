@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   Collapse,
@@ -41,9 +41,17 @@ function Header(props) {
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>User Profile</DropdownItem>
-                <DropdownItem>Cart</DropdownItem>
+                <DropdownItem>
+                  <Link to={"/cart"} className="link-btn">
+                    Cart
+                  </Link>
+                </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>Logout</DropdownItem>
+                <DropdownItem>
+                  <Link className="link-btn" to={"/login"}>
+                    Login
+                  </Link>
+                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavbarText style={{ marginRight: "3rem" }}>Username</NavbarText>

@@ -1,4 +1,5 @@
 import "./ProductDetails.css";
+import { Link } from "react-router-dom";
 function ProductDetails({ img }) {
   return (
     <div className="product-details-wrapper">
@@ -38,7 +39,12 @@ function ProductDetails({ img }) {
             id="goToCartBtn"
             className="product-details-action btn btn-warning text-decoration-none"
           >
-            Go to cart
+            <Link
+              to={"/cart"}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Go to cart
+            </Link>
           </div>
         </div>
       </div>

@@ -4,3 +4,7 @@
   font-weight: 600;
   cursor: pointer;
 }
+.link-btn {
+  text-decoration: none;
+  color: black;
+}
