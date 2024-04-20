@@ -53,6 +53,7 @@ function ProductList() {
                   name={product.title}
                   price={product.price}
                   productId={product.id}
+                  category={query.get("category")}
                 />
               ))}
           </div>
