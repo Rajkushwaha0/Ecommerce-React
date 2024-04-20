@@ -1,5 +1,6 @@
 .product-list-wrapper {
   width: 100%;
+  display: block;
   /* background-color: aqua; */
 }
 
@@ -56,6 +57,7 @@
   height: 30px;
   background-color: var(--dark-sky-blue);
   border-bottom: 1px solid var(--mid-gray);
+  padding-left: 10px;
 }
 .price-filter {
   display: flex;

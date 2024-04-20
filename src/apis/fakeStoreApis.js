@@ -1,13 +1,13 @@
 export function getAllCategories() {
-  return `${import.meta.env.VITE_FAKE_STORE_URL}/products/categories`;
+  return `https://fakestoreapi.com/products/categories`;
 }
 
 export function getAllProducts() {
-  return `${import.meta.env.VITE_FAKE_STORE_URL}/products`;
+  return `https://fakestoreapi.com/products`;
 }
 
 export function getAllProductsByCategory(category) {
-  return `${import.meta.env.VITE_FAKE_STORE_URL}/products/category/${category}`;
+  return `https://fakestoreapi.com/products/category/${category}`;
 }
 
 export function getProduct(id) {

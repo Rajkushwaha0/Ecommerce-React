@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./ProductBox.css";
 function ProductBox({ productImage, name, price, productId }) {
   return (
-    <Link to={`/product/${productId}`} className="product-box">
+    <Link to={`/product/${productId}`} className="link-btn">
       <div className="product-item">
         <div className="product-img">
           <img src={productImage} alt="" />

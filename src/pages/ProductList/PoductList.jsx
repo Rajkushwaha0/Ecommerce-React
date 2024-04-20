@@ -1,13 +1,46 @@
+import useCategory from "../../hooks/useCategory";
 import ProductBox from "../../components/ProductBox/ProductBox";
+import {
+  getAllProducts,
+  getAllProductsByCategory,
+} from "../../apis/fakeStoreApis";
+
+import axios from "axios";
+
+import { useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+//css
 import "./ProductList.css";
 
 function ProductList() {
   const minOption = [0, 10, 20, 50, 100, 200];
   const maxOption = [0, 100, 200, 500, 800, 1000];
+
+  const categories = useCategory();
+  const [query] = useSearchParams();
+  const [allProduct, setAllProduct] = useState(null);
+
+  async function downloadAllProduct(category) {
+    const downloadURL = category
+      ? getAllProductsByCategory(category)
+      : getAllProducts();
+    const response = await axios.get(downloadURL);
+    setAllProduct(response.data);
+  }
+
+  useEffect(() => {
+    downloadAllProduct(query.get("category"));
+  }, []);
   return (
     <div className="product-list-wrapper">
       <div className="product-list-container">
-        <h2>All Products</h2>
+        <h2>
+          {query.get("category")
+            ? query.get("category").charAt(0).toUpperCase() +
+              query.get("category").slice(1)
+            : "All Products"}
+        </h2>
         <div className="product-list-divider">
           {/* left side  */}
           <div className="left-divider">
@@ -18,10 +51,9 @@ function ProductList() {
               </div>
               <div className="sidebar-text category-text">Categories</div>
               <div className="category-product-list">
-                <div className="category">Jwellery</div>
-                <div className="category">Clothes</div>
-                <div className="category">Electronics</div>
-                <div className="category">Phone</div>
+                {categories.map((category) => (
+                  <div className="category">{category}</div>
+                ))}
               </div>
               <div class="sidebar-text">Filter by price</div>
               <div class="price-filter">
@@ -56,12 +88,15 @@ function ProductList() {
           </div>
           {/* right side  */}
           <div className="right-divider">
-            <ProductBox
-              productImage="https://assets-global.website-files.com/6256995755a7ea0a3d8fbd11/6257ec77a5eb90b45167d7b1_607ec34ab018c9feb781d314_5.jpeg"
-              name="Bag"
-              price="1200"
-              productId="1"
-            />
+            {allProduct &&
+              allProduct.map((product) => (
+                <ProductBox
+                  productImage={product.image}
+                  name={product.title}
+                  price={product.price}
+                  productId={product.id}
+                />
+              ))}
           </div>
         </div>
       </div>
@@ -70,12 +105,3 @@ function ProductList() {
 }
 
 export default ProductList;
-
-{
-  /* <ProductBox
-        productImage="https://assets-global.website-files.com/6256995755a7ea0a3d8fbd11/6257ec77a5eb90b45167d7b1_607ec34ab018c9feb781d314_5.jpeg"
-        name="Bag"
-        price="1200"
-        productId="1"
-      /> */
-}
