@@ -1,5 +1,5 @@
 export function getAllCategories() {
-  return `https://fakestoreapi.com/products/categories`;
+  return `http://localhost:8765/products/categories`;
 }
 
 export function getAllProducts() {
@@ -12,10 +12,6 @@ export function getAllProductsByCategory(category) {
 
 export function getProduct(id) {
   return `${import.meta.env.VITE_FAKE_STORE_URL}/products/${id}`;
-}
-
-export function signup() {
-  return `${import.meta.env.VITE_FAKE_STORE_URL}/users`;
 }
 
 export function sigin() {
@@ -32,4 +28,8 @@ export function addProductToUserCart() {
 
 export function updateProductInCart() {
   return `${import.meta.env.VITE_FAKE_STORE_URL}/carts/updateProduct`;
+}
+
+export function signup() {
+  return `http://localhost:8765/users`;
 }

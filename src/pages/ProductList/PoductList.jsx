@@ -30,6 +30,7 @@ function ProductList() {
   useEffect(() => {
     downloadAllProduct(query.get("category"));
   }, [query.get("category")]);
+
   return (
     <div className="product-list-wrapper">
       <div className="product-list-container">
