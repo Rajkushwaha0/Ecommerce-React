@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
 import App from "./App.jsx";
 
 //CSS import
@@ -8,6 +9,8 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <App />
+    <CookiesProvider defaultSetOptions={{ path: "/" }}>
+      <App />
+    </CookiesProvider>
   </BrowserRouter>
 );

@@ -24,6 +24,7 @@ function Auth({ onSubmit }) {
     setFormDetails({ ...formDetails, isLoading: true });
     onSubmit(formDetails);
   }
+
   return (
     <>
       <div class="input-login">
