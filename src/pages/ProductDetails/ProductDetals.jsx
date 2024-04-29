@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./ProductDetails.css";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import CartContext from "../../context/CartContext";
 function ProductDetails() {
   const { id } = useParams();
   const [productDetails, setProductDetails] = useState({});
+  const { cart, setCart } = useContext(CartContext);
 
   async function downloadDetails() {
     const response = await axios.get(`https://fakestoreapi.com/products/${id}`);
     setProductDetails(response.data);
   }
 
+  function onAddingProduct() {
+    setCart({ ...cart, products: [...cart.products, id] });
+  }
   useEffect(() => {
     downloadDetails(id);
   }, []);
@@ -44,7 +49,10 @@ function ProductDetails() {
                 </div>
               </div>
             </div>
-            <div className="product-details-action btn btn-primary text-decoration-non">
+            <div
+              onClick={onAddingProduct}
+              className="product-details-action btn btn-primary text-decoration-non"
+            >
               Add to cart
             </div>
             <div
