@@ -14,10 +14,6 @@ export function getProduct(id) {
   return `${import.meta.env.VITE_FAKE_STORE_URL}/products/${id}`;
 }
 
-export function getCartByUser(userId) {
-  return `${import.meta.env.VITE_FAKE_STORE_URL}/carts/user/${userId}`;
-}
-
 export function addProductToUserCart() {
   return `${import.meta.env.VITE_FAKE_STORE_URL}/carts`;
 }
@@ -32,4 +28,8 @@ export function signup() {
 
 export function sigin() {
   return `http://localhost:8765/auth/login`;
+}
+
+export function getCartByUser(userId) {
+  return `http://localhost:8765/carts/user/${userId}`;
 }

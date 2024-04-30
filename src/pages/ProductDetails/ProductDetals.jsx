@@ -1,7 +1,10 @@
+//library
 import { useContext, useEffect, useState } from "react";
-import "./ProductDetails.css";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+//css
+import "./ProductDetails.css";
+//context
 import CartContext from "../../context/CartContext";
 function ProductDetails() {
   const { id } = useParams();

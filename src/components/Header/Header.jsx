@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import UserContext from "../../context/UserContext";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+
 import {
   Collapse,
   Navbar,
@@ -16,9 +18,9 @@ import {
 
 //CSS import
 import "./Header.css";
-import { useCookies } from "react-cookie";
+//context
+import UserContext from "../../context/UserContext";
 import CartContext from "../../context/CartContext";
-import axios from "axios";
 
 function Header(props) {
   //for cookie
@@ -39,9 +41,17 @@ function Header(props) {
 
   //context
   const { user, setUser } = useContext(UserContext);
-  const { cart } = useContext(CartContext);
+  const { cart, setCart } = useContext(CartContext);
   // console.log(user);
 
+  function handleLogout() {
+    removeCookie("jwt-token", { httpOnly: true });
+    axios.get("http://localhost:8765/logout", {
+      withCredentials: true,
+    });
+    setUser(null);
+    setCart(null);
+  }
   return (
     <div>
       <Navbar {...props}>
@@ -58,24 +68,18 @@ function Header(props) {
               <DropdownMenu right>
                 <DropdownItem>User Profile</DropdownItem>
                 <DropdownItem>
-                  <Link to={"/cart"} className="link-btn">
-                    Cart {cart.products.length}
+                  <Link to={user && `/cart/${user.id}`} className="link-btn">
+                    Cart{" "}
+                    {cart &&
+                      cart.products &&
+                      cart.products.length &&
+                      `(${cart.products.length})`}
                   </Link>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
                   {token["jwt-token"] ? (
-                    <Link
-                      className="link-btn"
-                      to={"/"}
-                      onClick={() => {
-                        removeCookie("jwt-token", { httpOnly: true });
-                        axios.get("http://localhost:8765/logout", {
-                          withCredentials: true,
-                        });
-                        setUser(null);
-                      }}
-                    >
+                    <Link className="link-btn" to={"/"} onClick={handleLogout}>
                       Logout
                     </Link>
                   ) : (

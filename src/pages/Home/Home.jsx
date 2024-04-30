@@ -1,14 +1,24 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useContext, useEffect } from "react";
+//component
 import CategoryItem from "../../components/CategoryItem/CategoryItem";
 import Slider from "../../components/Slider/Slider";
-import { getAllCategories } from "../../apis/fakeStoreApis";
+//css
 import "./Home.css";
+//context
+import UserContext from "../../context/UserContext";
+// custom hooks
+import useCart from "../../hooks/useCart";
 import useCategory from "../../hooks/useCategory";
 
 function Home() {
   const categories = useCategory();
+
+  const { user } = useContext(UserContext);
+  const [cart] = useCart(user ? user.id : undefined);
   // console.log(categories);
+  useEffect(() => {
+    if (user) console.log("home page got user id by context", user.id);
+  }, [user]);
   return (
     <>
       <Slider />

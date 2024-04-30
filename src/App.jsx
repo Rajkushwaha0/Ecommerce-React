@@ -1,17 +1,22 @@
+//library
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
-import "./App.css";
+//component
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
+//context
 import UserContext from "./context/UserContext.js";
 import CartContext from "./context/CartContext.js";
+//routes
 import MainRoutes from "./routes/MainRoutes";
+//css
+import "./App.css";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [cart, setCart] = useState({ products: [] });
+  const [cart, setCart] = useState(null);
   const [token, setToken] = useCookies(["jwt-token"]);
 
   useEffect(() => {

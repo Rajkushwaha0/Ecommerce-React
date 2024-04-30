@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 //components imports
-
+import FilterSidebar from "../../components/FilterSidebar/FilterSidebar";
 import ProductBox from "../../components/ProductBox/ProductBox";
 import {
   getAllProducts,
@@ -13,7 +13,6 @@ import {
 
 //css
 import "./ProductList.css";
-import FilterSidebar from "../../components/FilterSidebar/FilterSidebar";
 
 function ProductList() {
   const [query] = useSearchParams();

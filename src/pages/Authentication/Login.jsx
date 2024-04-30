@@ -1,11 +1,15 @@
-import Auth from "../../components/Auth/Auth";
+//library
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./Login.css";
-import { sigin } from "../../apis/fakeStoreApis";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useContext } from "react";
+//css
+import "./Login.css";
+//component
+import Auth from "../../components/Auth/Auth";
+import { sigin } from "../../apis/fakeStoreApis";
+//context
 import userContext from "../../context/UserContext";
 
 function Login() {
