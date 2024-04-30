@@ -3,10 +3,16 @@ import "./Cart.css";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import CartContext from "../../context/CartContext";
-import { getProduct } from "../../apis/fakeStoreApis";
+import { getProduct, updateProductInCart } from "../../apis/fakeStoreApis";
+import UserContext from "../../context/UserContext";
+
+//tostify
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Cart() {
-  const { cart } = useContext(CartContext);
+  const { cart, setCart } = useContext(CartContext);
+  const { user } = useContext(UserContext);
   const [items, setItems] = useState([]);
 
   async function downloadProducts(cart) {
@@ -28,11 +34,22 @@ function Cart() {
     setItems(products);
   }
 
+  async function onProductUpdate(productId, quantity) {
+    if (!user) return;
+    const res = await axios.put(updateProductInCart(), {
+      userId: user.id,
+      productId,
+      quantity,
+    });
+    setCart({ ...res.data });
+  }
+
   useEffect(() => {
     downloadProducts(cart);
-    console.log(items);
+    // console.log(items);
   }, [cart]);
 
+  const notify = () => toast("Order placed at your address");
   return (
     <div className="container">
       <div className="row">
@@ -44,6 +61,7 @@ function Cart() {
               items.map((product) => (
                 <OrderDetailsProduct
                   key={product.id}
+                  id={product.id}
                   title={product.title}
                   image={product.image}
                   price={product.price}
@@ -59,11 +77,11 @@ function Cart() {
               <div className="price-details-data">
                 <div className="price-details-item d-flex flex-row justify-content-between">
                   <div>Price</div>
-                  <div id="total-price"></div>
+                  <div id="total-price">1500</div>
                 </div>
                 <div className="price-details-item d-flex flex-row justify-content-between">
                   <div>Discount</div>
-                  <div>10</div>
+                  <div>10%</div>
                 </div>
                 <div className="price-details-item d-flex flex-row justify-content-between">
                   <div>Delivery Charges</div>
@@ -71,7 +89,7 @@ function Cart() {
                 </div>
                 <div className="price-details-item d-flex flex-row justify-content-between">
                   <div>Total</div>
-                  <div id="net-price"></div>
+                  <div id="net-price">1350</div>
                 </div>
               </div>
             </div>
@@ -82,12 +100,15 @@ function Cart() {
               >
                 Continue Shopping
               </a>
-              <a
-                href="/"
-                className="checkout-btn btn btn-primary text-decoration-none"
-              >
-                Checkout
-              </a>
+              <div>
+                <a
+                  className="checkout-btn btn btn-primary text-decoration-none"
+                  onClick={notify}
+                >
+                  Checkout
+                </a>
+                <ToastContainer />
+              </div>
             </div>
           </div>
         </div>

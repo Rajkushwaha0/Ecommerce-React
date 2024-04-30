@@ -11,7 +11,7 @@ export function getAllProductsByCategory(category) {
 }
 
 export function updateProductInCart() {
-  return `${import.meta.env.VITE_FAKE_STORE_URL}/carts/updateProduct`;
+  return `http://localhost:8765/carts/updateProduct`;
 }
 
 export function signup() {
