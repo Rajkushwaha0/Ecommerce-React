@@ -68,13 +68,15 @@ function Header(props) {
               <DropdownMenu right>
                 <DropdownItem>User Profile</DropdownItem>
                 <DropdownItem>
-                  <Link to={user && `/cart/${user.id}`} className="link-btn">
-                    Cart{" "}
-                    {cart &&
-                      cart.products &&
-                      cart.products.length &&
-                      `(${cart.products.length})`}
-                  </Link>
+                  {user && (
+                    <Link to={`/cart/${user.id}`} className="link-btn">
+                      Cart{" "}
+                      {cart &&
+                        cart.products &&
+                        cart.products.length &&
+                        `(${cart.products.length})`}
+                    </Link>
+                  )}
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>

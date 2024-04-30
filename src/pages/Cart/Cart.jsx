@@ -1,11 +1,31 @@
 import OrderDetailsProduct from "../../components/OrderDetailsProduct/OrderDetailsProduct";
 import "./Cart.css";
-import { useParams } from "react-router-dom";
-import useCart from "../../hooks/useCart";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import CartContext from "../../context/CartContext";
+import { getProduct } from "../../apis/fakeStoreApis";
 
 function Cart() {
-  const { userId } = useParams();
-  const [cart, setCart] = useCart(userId);
+  const { cart } = useContext(CartContext);
+  const [items, setItems] = useState(null);
+
+  async function downloadProducts(cart) {
+    if (!cart || !cart.products) return;
+
+    const productPromise = await cart.products.map((product) =>
+      axios.get(getProduct(product.productId))
+    );
+
+    const fetchedProducts = await axios.all(productPromise);
+
+    fetchedProducts.map((item) => setItems(item.data));
+  }
+
+  useEffect(() => {
+    downloadProducts(cart);
+    console.log(items);
+  }, []);
+
   return (
     <div className="container">
       <div className="row">
@@ -13,8 +33,8 @@ function Cart() {
         <div className="cart-wrapper d-flex flex-row">
           <div className="order-details d-flex flex-column" id="orderDetails">
             <div className="order-details-title fw-bold">Order Details</div>
-            {/* {products.length > 0 &&
-              products.map((product) => (
+            {/* {items.length > 0 &&
+              items.map((product) => (
                 <OrderDetailsProduct
                   key={product.id}
                   title={product.title}
@@ -24,11 +44,6 @@ function Cart() {
                   onRemove={() => onProductUpdate(product.id, 0)}
                 />
               ))} */}
-            <OrderDetailsProduct />
-            <OrderDetailsProduct />
-            <OrderDetailsProduct />
-            <OrderDetailsProduct />
-            <OrderDetailsProduct />
           </div>
 
           <div className="price-details d-flex flex-column" id="priceDetails">
