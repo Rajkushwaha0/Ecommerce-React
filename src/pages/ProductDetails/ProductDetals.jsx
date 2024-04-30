@@ -1,23 +1,33 @@
 //library
 import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 //css
 import "./ProductDetails.css";
 //context
 import CartContext from "../../context/CartContext";
+import UserContext from "../../context/UserContext";
+import { addProductToUserCart } from "../../apis/fakeStoreApis";
 function ProductDetails() {
   const { id } = useParams();
+  const navigator = useNavigate();
   const [productDetails, setProductDetails] = useState({});
-  const { cart, setCart } = useContext(CartContext);
+  const { setCart } = useContext(CartContext);
+  const { user } = useContext(UserContext);
 
   async function downloadDetails() {
     const response = await axios.get(`https://fakestoreapi.com/products/${id}`);
     setProductDetails(response.data);
   }
 
-  function onAddingProduct() {
-    setCart({ ...cart, products: [...cart.products, id] });
+  async function onAddingProduct() {
+    if (!user) return;
+    const res = await axios.put(addProductToUserCart(), {
+      userId: user.id,
+      productId: id,
+    });
+    setCart({ ...res.data });
+    navigator(`/cart/${user.id}`);
   }
   useEffect(() => {
     downloadDetails(id);

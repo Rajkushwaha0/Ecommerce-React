@@ -7,24 +7,31 @@ import { getProduct } from "../../apis/fakeStoreApis";
 
 function Cart() {
   const { cart } = useContext(CartContext);
-  const [items, setItems] = useState(null);
+  const [items, setItems] = useState([]);
 
   async function downloadProducts(cart) {
     if (!cart || !cart.products) return;
 
+    const productQuantityMapping = {};
+    cart.products.forEach((product) => {
+      productQuantityMapping[product.productId] = product.quantity;
+    });
+
     const productPromise = await cart.products.map((product) =>
       axios.get(getProduct(product.productId))
     );
-
     const fetchedProducts = await axios.all(productPromise);
-
-    fetchedProducts.map((item) => setItems(item.data));
+    const products = fetchedProducts.map((item) => ({
+      ...item.data,
+      quantity: productQuantityMapping[item.data.id],
+    }));
+    setItems(products);
   }
 
   useEffect(() => {
     downloadProducts(cart);
     console.log(items);
-  }, []);
+  }, [cart]);
 
   return (
     <div className="container">
@@ -33,7 +40,7 @@ function Cart() {
         <div className="cart-wrapper d-flex flex-row">
           <div className="order-details d-flex flex-column" id="orderDetails">
             <div className="order-details-title fw-bold">Order Details</div>
-            {/* {items.length > 0 &&
+            {items.length > 0 &&
               items.map((product) => (
                 <OrderDetailsProduct
                   key={product.id}
@@ -43,7 +50,7 @@ function Cart() {
                   quantity={product.quantity}
                   onRemove={() => onProductUpdate(product.id, 0)}
                 />
-              ))} */}
+              ))}
           </div>
 
           <div className="price-details d-flex flex-column" id="priceDetails">

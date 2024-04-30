@@ -10,10 +10,6 @@ export function getAllProductsByCategory(category) {
   return `http://localhost:8765/products/category/${category}`;
 }
 
-export function addProductToUserCart() {
-  return `${import.meta.env.VITE_FAKE_STORE_URL}/carts`;
-}
-
 export function updateProductInCart() {
   return `${import.meta.env.VITE_FAKE_STORE_URL}/carts/updateProduct`;
 }
@@ -32,4 +28,8 @@ export function getCartByUser(userId) {
 
 export function getProduct(id) {
   return `http://localhost:8765/products/${id}`;
+}
+
+export function addProductToUserCart() {
+  return `http://localhost:8765/carts`;
 }
